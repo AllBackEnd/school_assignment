@@ -1,32 +1,30 @@
 package allback.school_assignment.school.domain.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import allback.school_assignment.valuetype.Gender;
-import allback.school_assignment.valuetype.GenderConverter;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "SCHOOL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Document(collection = "SCHOOL")
 public class School {
 
     @Id
-    @Column(name = "SCH_ID")
+    @Field("SCH_ID")
     private Long id;
 
-    @Column(name = "SCH_NAME")
+    @Field("SCH_NAME")
     private String name;
 
-    @Column(name = "CAP")
+    @Field("CAP")
     private Integer capacity;
 
-    @Convert(converter = GenderConverter.class)
-    @Column(name = "GND")
+    @Field("GND")
     private Gender acceptableGender;
 
     public School(long id, String name, int capacity, Gender acceptableGender) {

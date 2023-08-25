@@ -1,11 +1,6 @@
 package allback.school_assignment.student.domain;
 
 import allback.school_assignment.valuetype.Gender;
-import allback.school_assignment.valuetype.GenderConverter;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,45 +8,46 @@ import lombok.ToString;
 
 import java.util.*;
 
-@Entity(name = "STUDENT")
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Student {
 
     @Id
-    @Column(name = "STD_ID")
+    @Field("STD_ID")
     private Long id;
 
-    @Convert(converter = GenderConverter.class)
-    @Column(name = "GND")
+    @Field("GND")
     private Gender gender;
 
-    @Column(name = "SCR")
+    @Field("SCR")
     private Long score;
 
-    @Column(name = "PRE1")
+    @Field("PRE1")
     private String firstPreferSchool;
 
-    @Column(name = "PRE2")
+    @Field("PRE2")
     private String secondPreferSchool;
 
-    @Column(name = "PRE3")
+    @Field("PRE3")
     private String thirdPreferSchool;
 
-    @Column(name = "PRE4")
+    @Field("PRE4")
     private String fourthPreferSchool;
 
-    @Column(name = "PRE5")
+    @Field("PRE5")
     private String fifthPreferSchool;
 
-    @Column(name = "PRE6")
+    @Field("PRE6")
     private String sixthPreferSchool;
 
-    @Column(name = "PRE7")
+    @Field("PRE7")
     private String seventhPreferSchool;
 
-    @Column(name = "YEAR_INFO")
+    @Field("YEAR_INFO")
     private String year;
 
 
@@ -94,7 +90,7 @@ public class Student {
                 canSchoolList.add("주성고");
                 canSchoolList.add("금천고");
 
-        if(gender == Gender.MALE) {
+        if(gender == Gender.남) {
             canSchoolList.addAll(Arrays.asList(
                       "충북고"
                     , "청주고"
@@ -103,7 +99,7 @@ public class Student {
                     , "세광고"
                     , "신흥고"
                     ));
-        } else if (gender == Gender.FEMALE) {
+        } else if (gender == Gender.여) {
             canSchoolList.addAll(Arrays.asList(
                       "청주여고"
                     , "일신여고"
