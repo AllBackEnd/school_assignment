@@ -1,0 +1,24 @@
+server:
+  port: 8090
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+      format_sql: true
+    defer-datasource-initialization: true
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
+  mvc:
+    static-path-pattern: "/static/**"
+logging.level:
+  org.hibernate.SQL: debug
