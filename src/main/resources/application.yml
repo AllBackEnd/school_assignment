@@ -6,19 +6,12 @@ spring:
       enabled: true
   freemarker:
     cache: false
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        show_sql: true
-      format_sql: true
-    defer-datasource-initialization: true
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/local
   thymeleaf:
     prefix: classpath:templates/
     suffix: .html
     cache: false
   mvc:
     static-path-pattern: "/static/**"
-logging.level:
-  org.hibernate.SQL: debug

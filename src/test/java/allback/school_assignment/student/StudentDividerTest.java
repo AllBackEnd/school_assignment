@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @Slf4j
 class StudentDividerTest {
 
@@ -29,15 +27,15 @@ class StudentDividerTest {
         }
 
         // WHEN
-        final List<Student> maleStudentList = StudentDivider.divideByGender(studentList, Gender.MALE);
+        final List<Student> maleStudentList = StudentDivider.divideByGender(studentList, Gender.남);
 
-        final List<Student> femaleStudentList = StudentDivider.divideByGender(studentList, Gender.FEMALE);
+        final List<Student> femaleStudentList = StudentDivider.divideByGender(studentList, Gender.여);
 
 
         // THEN
 
-        Assertions.assertThat(maleStudentList).extracting(Student::getGender).containsOnly(Gender.MALE);
-        Assertions.assertThat(femaleStudentList).extracting(Student::getGender).containsOnly(Gender.FEMALE);
+        Assertions.assertThat(maleStudentList).extracting(Student::getGender).containsOnly(Gender.남);
+        Assertions.assertThat(femaleStudentList).extracting(Student::getGender).containsOnly(Gender.여);
 
         log.info(maleStudentList.toString());
         log.info(femaleStudentList.toString());
