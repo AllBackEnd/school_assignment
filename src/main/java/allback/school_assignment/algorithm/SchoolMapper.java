@@ -22,7 +22,7 @@ public class SchoolMapper {
 
       PreferEnum prefer = findPrefer(allocSchool, engageList.get(stdId));
       result.put(stdId, prefer);
-      log.info("std id : {}, prefer : {}", stdId, prefer.getName());
+      log.info("std id : {}, prefer : {}, school name : {}", stdId, prefer.getName(), allocSchool);
     }
 
     return result;
