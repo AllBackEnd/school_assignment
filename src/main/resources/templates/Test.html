@@ -28,13 +28,22 @@
             $('#student-form').submit(function(event) {
                 event.preventDefault(); // Prevent default form submission
 
-                var year = $('#year').val();
+                let radios = document.getElementsByName('year');
+                let checkedYear;
+                for (let radio of radios)
+                {
+                    if (radio.checked) {
+                        checkedYear = radio.value;
+                    }
+                }
+
+                console.log(checkedYear);
 
                 // Make an AJAX request to the server
                 $.ajax({
                     type: 'POST',
                     url: '/show-students',
-                    data: { 'year': year },
+                    data: { 'year': checkedYear },
                     success: function(data) {
                         // Update the student-info div with the received data
                         $('#student-info').html(data);

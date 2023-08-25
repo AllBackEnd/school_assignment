@@ -58,7 +58,7 @@ public class Student {
     private String year;
 
     private Student(Long id, Gender gender, String year) {
-            this.id = Integer.valueOf(year)*1000 + id;
+            this.id = Integer.valueOf(year)*10000 + id;
             this.gender = gender;
             this.score = createRandomScore(id);
             final List<String> randomPreferSchool = createRandomPreferSchool(id, gender);

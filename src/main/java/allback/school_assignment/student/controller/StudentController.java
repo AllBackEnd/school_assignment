@@ -30,7 +30,7 @@ public class StudentController {
     @PostMapping("/show-students")
     public @ResponseBody String showStudents(@RequestParam("year") int year) {
         studentService.randomCreateStudent(String.valueOf(year));
-        String studentInfoHtml = "<p>남자는 2420명, 여자는 2445명 생성 되었습니다.</p>";
+        String studentInfoHtml = "남자는 2420명, 여자는 2445명 생성 되었습니다.";
         return studentInfoHtml;
     }
 }
