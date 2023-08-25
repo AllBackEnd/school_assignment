@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+body.loading {
+    cursor: wait;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    height: 10%;
+    width: 80%;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    height: 80%;
+}
+
+.content {
+    flex: 1;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 0;
+    height: 10%;
+    width: 80%;
+    overflow: auto;
+}
+footer div {
+    padding-left: 10px;
+}
+footer div h3 {
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+    top: 0;
+}
+
+form {
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+button {
+    background-color: #1E90FF;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #007FFF;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    margin-block-start: 1rem;
+    margin-block-end: 1rem;
+
+}
+label.radio-inline {
+    display: inline-flex; /* Change to inline-flex */
+    align-items: center;
+    margin-right: 1rem; /* Add margin for spacing */
+}
+
+input[type="radio"] {
+    margin-right: 0.2rem;
+}
+
+input[type="text"] {
+    padding: 0.3rem;
+}
+
+#logs {
+    overflow-y: auto;
+}
+</style>
+<body>
+    <header>
+        <h1>청주시 평준화고교 배정</h1>
+    </header>
+    <main>
+        <div class="content">
+            <h2>학생 데이터 생성</h2>
+            <form action="/student" method="post" onsubmit="onSubmitForm()">
+                <h3>연도를 입력해주세요</h3>
+                <label class="radio-inline">
+                    <input type="radio" name="year" value="2021" required> 2021
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="year" value="2022" required> 2022
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="year" value="2023" required> 2023
+                </label>
+                <label>
+                    <input type="radio" name="year" id="directInputRadio">
+                    <input type="text" name="year" id="directInput" placeholder="직접입력" disabled required>
+                </label>
+                <button id="stdSubmit" type="submit" onclick="updateFooter('학생 데이터를 생성하고 있습니다.')">생성</button>
+            </form>
+        </div>
+        <div class="content">
+            <h2>평준화고교 배정</h2>
+                <button class="seed">1</button>
+                <button class="seed">2</button>
+                <button class="seed">3</button><br>
+                <button class="seed">4</button>
+                <button class="seed">5</button>
+                <button class="seed">6</button><br>
+                <button class="seed">7</button>
+                <button class="seed">8</button>
+                <button class="seed">9</button><br>
+            <form id="seedForm" action="" method="post" onsubmit="onSubmitForm()">
+                <h2>선택된 번호: <span class="selected"></span></h2><br>
+                <input type="hidden" name="seed" id="selectedSeedInput">
+                <button type="submit">배정</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div id="footer">
+            <!-- <h3>학생 데이터를 생성하고 있습니다.</h3>
+            <h3>학생 데이터가 생성되었습니다.</h3>
+            <h3>배정이 시작되었습니다.</h3>
+            <h3>순차배정 방법에 의한 배정이 완료되었습니다.</h3>
+            <h3>통합배정 방법에 의한 배정이 완료되었습니다.</h3>
+            <h3>배정이 완료되었습니다.</h3> -->
+        </div>
+    </footer>
+    <script>
+        function updateFooter(message) {
+            const footerElement = document.getElementById("footer");
+            const existingContent = footerElement.innerHTML;
+            const newContent = existingContent + "<h3>" + message + "</h3>";
+            footerElement.innerHTML = newContent;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const radio = document.getElementById("directInputRadio");
+            const input = document.getElementById("directInput");
+            radio.value = null;
+
+            form.addEventListener("submit", function (event) {
+                if (radio.checked) {
+                    radio.removeAttribute("name");
+                    input.disabled = false;   
+                }
+            });
+
+            radio.addEventListener("change", function () {
+                input.disabled = !this.checked;
+                if (!this.checked) {
+                    radio.setAttribute("name", "year");
+                    input.setCustomValidity("");
+                }
+            });
+        });
+
+        const seedButtons = document.querySelectorAll('.seed');
+        const selectedDisplay = document.querySelector('.selected');
+        const selectedInput = document.getElementById('selectedSeedInput');
+
+        let selectedValue = '';
+
+        seedButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                selectedValue = button.textContent;
+                selectedDisplay.textContent = selectedValue;
+                selectedInput.value = selectedValue;
+            });
+        });
+
+        $(document).ready(function() {
+            $('#stdSubmit').click(function(event) {
+                event.preventDefault();
+                let radios = document.getElementsByName('year');
+                let checkedYear;
+
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        checkedYear = radio.value;
+                        break;
+                    }
+                }
+
+                if (!checkedYear && document.getElementById('directInputRadio').checked) {
+                    checkedYear = document.getElementById('directInput').value;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/student',
+                    data: {'year': checkedYear},
+                    success: function(response) {
+                        $('#footer').html('<h3>' + response + '</h3>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });      
+    </script>
+</body>
+</html>
