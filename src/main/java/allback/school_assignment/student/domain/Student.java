@@ -25,7 +25,7 @@ public class Student {
     @Field("STD_ID")
     @Setter
     private Long id;
-    
+
     @Field("GND")
     @Setter
     private Gender gender;
@@ -57,11 +57,11 @@ public class Student {
     @Field("YEAR_INFO")
     private String year;
 
-    private Student(Long id, Gender gender, String year) {
+    private Student(Long id, Gender gender, String year, Random random) {
             this.id = Integer.valueOf(year)*10000 + id;
             this.gender = gender;
-            this.score = createRandomScore(id);
-            final List<String> randomPreferSchool = createRandomPreferSchool(id, gender);
+            this.score = createRandomScore(random);
+            final List<String> randomPreferSchool = createRandomPreferSchool(id, gender, random);
             this.firstPreferSchool = randomPreferSchool.get(0);
             this.secondPreferSchool = randomPreferSchool.get(1);
             this.thirdPreferSchool = randomPreferSchool.get(2);
@@ -71,18 +71,18 @@ public class Student {
             this.seventhPreferSchool = randomPreferSchool.get(6);
             this.year = year;
     }
-    public static Student createRandomStudent(Long id, Gender gender, String year) {
-            return new Student(id, gender, year);
+    public static Student createRandomStudent(Long id, Gender gender, String year, Random random) {
+            return new Student(id, gender, year, random);
     }
 
-    private Long createRandomScore(Long id) {
-        Random random = new Random(id);
+    private Long createRandomScore(Random random) {
+        //Random random = new Random(id);
         long min = 0;
-        long max = 100;
+        long max = 100000000;
         return random.nextLong(max - min +1) + min;
     }
 
-    private List<String> createRandomPreferSchool(Long id, Gender gender) {
+    private List<String> createRandomPreferSchool(Long id, Gender gender, Random random) {
 
         List<String> canSchoolList = new ArrayList<>();
 
@@ -95,7 +95,7 @@ public class Student {
 
         if(gender == Gender.남) {
             canSchoolList.addAll(Arrays.asList(
-                        "충북고"
+                      "충북고"
                     , "청주고"
                     , "청석고"
                     , "운호고"
@@ -104,14 +104,13 @@ public class Student {
                     ));
         } else if (gender == Gender.여) {
             canSchoolList.addAll(Arrays.asList(
-                        "청주여고"
+                      "청주여고"
                     , "일신여고"
                     , "충북여고"
                     , "산남고"
                     , "청주중앙여고"));
         }
-        Random rand = new Random(id);
-        Collections.shuffle(canSchoolList, rand);
+        Collections.shuffle(canSchoolList, random);
         return canSchoolList;
     }
 }

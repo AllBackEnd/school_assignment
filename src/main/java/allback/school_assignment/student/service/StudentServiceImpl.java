@@ -1,6 +1,7 @@
 package allback.school_assignment.student.service;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +25,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Transactional
     public void randomCreateStudent(String year) {
+        Random random = new Random(Long.parseLong(year));
         for (long i = 1; i < 2421; i++) {
-            studentRepository.save((Student.createRandomStudent(i,Gender.남,year)));
+            studentRepository.save((Student.createRandomStudent(i, Gender.남, year, random)));
         }
         for (long i = 2421; i <4866;i++){
-            studentRepository.save((Student.createRandomStudent(i,Gender.여,year)));
+            studentRepository.save((Student.createRandomStudent(i, Gender.여, year, random)));
         }
     }
 }
