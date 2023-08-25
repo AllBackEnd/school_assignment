@@ -1,4 +1,4 @@
-package allback.school_assignment.school.domain.domain;
+package allback.school_assignment.school.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -25,15 +25,18 @@ public class School {
     @Field("GND")
     private Gender acceptableGender;
 
-    public School(long id, String name, int capacity, Gender acceptableGender) {
-        this.id = id;
+    @Field("YEAR_INFO")
+    private String year;
+
+    public School(Long id, String name, int capacity, Gender acceptableGender, String year) {
+        this.id = Integer.valueOf("1"+year)*10000 + id;
         this.name = name;
         this.capacity = capacity;
         this.acceptableGender = acceptableGender;
+        this.year = year;
     }
 
-    public static School createSchool(Long id, String name, int capacity, Gender acceptableGender) {
-
-        return new School(id, name, capacity, acceptableGender);
+    public static School createSchool(Long id, String name, int capacity, Gender acceptableGender, String year) {
+        return new School(id, name, capacity, acceptableGender, year);
     }
 }
