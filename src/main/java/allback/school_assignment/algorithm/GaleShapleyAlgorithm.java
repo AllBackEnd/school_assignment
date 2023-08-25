@@ -9,11 +9,105 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public class GaleShapleyAlgorithm {
 
+  private static String S_ONE = "a에이고";
+  private static String S_TWO = "b비이고";
+  private static String S_THR = "c씨이고";
+  private static String S_FOU = "d디이고";
+
+  public static Map<String, Integer> SCHOOL_DATA = new HashMap<String, Integer>() {{
+    put(S_ONE, 2);
+    put(S_TWO, 3);
+    put(S_THR, 4);
+    put(S_FOU, 3);
+  }};
+  public static Map<Integer, List<String>> STUDENT_DATA = new HashMap<Integer, List<String>>() {{
+    put(1, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_TWO);
+      add(S_THR);
+    }});
+    put(2, new ArrayList<String>() {{
+      add(S_TWO);
+      add(S_THR);
+      add(S_FOU);
+    }});
+    put(3, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_THR);
+      add(S_FOU);
+    }});
+    put(4, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_TWO);
+      add(S_FOU);
+    }});
+    put(5, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_TWO);
+      add(S_THR);
+    }});
+    put(6, new ArrayList<String>() {{
+      add(S_TWO);
+      add(S_THR);
+      add(S_FOU);
+    }});
+    put(7, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_THR);
+      add(S_FOU);
+    }});
+    put(8, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_TWO);
+      add(S_FOU);
+    }});
+    put(9, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_TWO);
+      add(S_THR);
+    }});
+    put(10, new ArrayList<String>() {{
+      add(S_TWO);
+      add(S_THR);
+      add(S_FOU);
+    }});
+    put(11, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_THR);
+      add(S_FOU);
+    }});
+    put(12, new ArrayList<String>() {{
+      add(S_ONE);
+      add(S_TWO);
+      add(S_FOU);
+    }});
+  }};
+  public static ArrayList<String> SCHOOL_IDS = new ArrayList<String>() {{
+    add(S_ONE);
+    add(S_TWO);
+    add(S_THR);
+    add(S_FOU);
+  }};
+  public static ArrayList<Integer> STUDENT_IDS = new ArrayList<Integer>() {{
+    add(1);
+    add(2);
+    add(3);
+    add(4);
+    add(5);
+    add(6);
+    add(7);
+    add(8);
+    add(9);
+    add(10);
+    add(11);
+    add(12);
+  }};
+
   public String calculate(List<String> school_ids, List<Integer> student_ids) {
-    // 1. 모든 data 긁어옴
+    // 1. data 확보
     Map<String, Integer> schools = getAllSchool(); // 학교 이름과 정원
     Map<Integer, List<String>> students = getAllStudentList(); // 학생 id와 지망 리스트
-    int n_wishes = 2; // 지망 순위 개수, 위 list의 lenth
+    int n_wishes = 3; // 지망 순위 개수, 위 list의 lenth
     Map<Integer, List<String>> forbidden = getAllForbidden(); // 매칭 금지 리스트, 무조건 비어있음
 
     // 2. 연산 수행
@@ -26,7 +120,6 @@ public class GaleShapleyAlgorithm {
   private List<Object> allocate(Map<String, Integer> schools, Map<Integer, List<String>> students,
       int n_wishes, Map<Integer, List<String>> forbidden, List<String> school_ids,
       List<Integer> student_ids) {
-
 
 
 
@@ -49,16 +142,12 @@ public class GaleShapleyAlgorithm {
 
   private Map<String, Integer> getAllSchool() {
 
-    return new HashMap<String, Integer>() {{ put("a", 1); put("b", 1); put("c", 1); }};
+    return SCHOOL_DATA;
   }
 
   private Map<Integer, List<String>> getAllStudentList() {
 
-    return new HashMap<Integer, List<String>>() {{
-      put(1, new ArrayList<String>() {{ add("a"); add("c"); }});
-      put(2, new ArrayList<String>() {{ add("b"); add("c"); }});
-      put(3, new ArrayList<String>() {{ add("a"); add("b"); }});
-    }};
+    return STUDENT_DATA;
   }
 
   private HashMap<Integer, List<String>> getAllForbidden() {

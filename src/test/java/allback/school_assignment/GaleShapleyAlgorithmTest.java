@@ -10,14 +10,6 @@ public class GaleShapleyAlgorithmTest {
   public void calculateTest() {
     GaleShapleyAlgorithm algorithm = new GaleShapleyAlgorithm();
 
-    algorithm.calculate(new ArrayList<String>() {{
-      add("1청주고");
-      add("2가나고");
-      add("3하마고");
-    }}, new ArrayList<Integer>() {{
-      add(1);
-      add(2);
-      add(3);
-    }});
+    algorithm.calculate(GaleShapleyAlgorithm.SCHOOL_IDS, GaleShapleyAlgorithm.STUDENT_IDS);
   }
 }
