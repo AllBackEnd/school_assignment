@@ -24,8 +24,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Boolean isYearData(String year){
-        return studentRepository.findByYear(year).isEmpty();
+    public Boolean hasYearData(String year){
+        return !studentRepository.findByYear(year).isEmpty();
     }
 
     @Transactional
