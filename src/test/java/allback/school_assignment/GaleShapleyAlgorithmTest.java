@@ -1,6 +1,7 @@
 package allback.school_assignment;
 
 import allback.school_assignment.algorithm.GaleShapleyAlgorithm;
+import allback.school_assignment.algorithm.SchoolMapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -108,7 +109,10 @@ public class GaleShapleyAlgorithmTest {
   @Test
   public void calculateTest() {
     GaleShapleyAlgorithm algorithm = new GaleShapleyAlgorithm();
-    algorithm.allocate(SCHOOL_DATA, STUDENT_DATA, 3, new HashMap<>(), SCHOOL_IDS, STUDENT_IDS);
+    List<Object> result = algorithm.allocate(SCHOOL_DATA, STUDENT_DATA, 3, new HashMap<>(), SCHOOL_IDS, STUDENT_IDS);
     algorithm.printResult();
+
+    SchoolMapper schoolMapper = new SchoolMapper();
+    schoolMapper.map((Map<Integer, String>) result.get(0), STUDENT_DATA);
   }
 }
