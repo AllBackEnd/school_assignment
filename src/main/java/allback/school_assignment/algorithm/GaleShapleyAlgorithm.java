@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GaleShapleyAlgorithm {
 
   private static String S_ONE = "a에이고";
@@ -137,19 +139,25 @@ public class GaleShapleyAlgorithm {
 
     // 2. 모든 학생이 가장 높은 학교부터 지원
     for (int prefer = 0; prefer < n_wishes; prefer++) {
+      log.info("----------- prefer : {} -----------", prefer);
+
       // 3. 각 학생이 list에 들어간 순서대로 학교를 지원
       for (int stdIdx = 0; stdIdx < studentsEngageList.size(); stdIdx++) {
         // 4. 이미 지원이 완료된 학생이라면 skip
         if (isEntered(stdIdx)) {
-          break;
+          log.info("prefer : {}, stdIdx : {} already entered\n", prefer, stdIdx);
+          continue;
         }
 
         // 5. 특정 학생이 현재 우선 순위에서 원하는 학교 획득
         String preferSchool = getPreferSchool(prefer, stdIdx, student_ids, studentsEngageList);
-        
+
         // 6. 해당 학교에 지원
         if (schoolCurCntMap.isRemain(preferSchool)) {
           enterSchool(preferSchool, stdIdx, student_ids);
+          log.info("prefer : {}, stdIdx : {} entered\n", prefer, stdIdx);
+        } else {
+          log.info("prefer : {}, stdIdx : {} ----- not entered\n", prefer, stdIdx);
         }
       }
     }
@@ -163,8 +171,9 @@ public class GaleShapleyAlgorithm {
   // 현재 우선 순위에서 선호 학교명 획득
   private String getPreferSchool(int prefer, int stdIdx, List<Integer>student_ids, Map<Integer, List<String>> studentsEngageList) {
     Integer id = student_ids.get(stdIdx);
-
-    return studentsEngageList.get(id).get(prefer);
+    String school = studentsEngageList.get(id).get(prefer);
+    log.info("std id : {}, sc name : {}", id, school);
+    return school;
   }
 
   // 학교에 지원 (지원 가능한 상태에서만 호출됨)
