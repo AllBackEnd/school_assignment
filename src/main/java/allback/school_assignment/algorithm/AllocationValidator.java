@@ -27,8 +27,8 @@ public class AllocationValidator {
         // 5. 현재 지망보다 높은 학교의 마지막 배정 순위 획득
         int last = lastPrefer.get(targetSchool);
 
-        // 7. stable 판단
-        if (last > curPrefer) {
+        // 6. stable 판단
+        if (last > preferIdx) {
           log.info("unstable -----");
         } else {
           log.info("stable");
