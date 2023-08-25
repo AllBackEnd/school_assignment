@@ -36,13 +36,11 @@
                         checkedYear = radio.value;
                     }
                 }
-
-                console.log(checkedYear);
-
+                
                 // Make an AJAX request to the server
                 $.ajax({
                     type: 'POST',
-                    url: '/show-students',
+                    url: '/student',
                     data: { 'year': checkedYear },
                     success: function(data) {
                         // Update the student-info div with the received data

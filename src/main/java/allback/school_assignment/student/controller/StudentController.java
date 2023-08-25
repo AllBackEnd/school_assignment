@@ -15,19 +15,13 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping("/get-std")
+    @GetMapping("/student")
     public String getData() {
         // studentService.findAll();
         return "/Test";
     }
 
-    @PostMapping("/make-std")
-    public String makeStudentData(@RequestParam("year") String year) {
-        studentService.randomCreateStudent(year);
-        return "student"; 
-    }
-
-    @PostMapping("/show-students")
+    @PostMapping("/student")
     public @ResponseBody String showStudents(@RequestParam("year") int year) {
         studentService.randomCreateStudent(String.valueOf(year));
         String studentInfoHtml = "남자는 2420명, 여자는 2445명 생성 되었습니다.";
