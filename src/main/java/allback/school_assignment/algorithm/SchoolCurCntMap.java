@@ -40,4 +40,16 @@ public class SchoolCurCntMap {
       return false;
     }
   }
+
+  public String getRemainSchool() {
+    Iterator iterator = map.entrySet().iterator();
+    while (iterator.hasNext()) {
+      Entry<String, List<Integer>> element = (Entry<String, List<Integer>>) iterator.next();
+      if (isRemain(element.getKey())) {
+        return element.getKey();
+      }
+    }
+
+    throw new RuntimeException("No remain school");
+  }
 }

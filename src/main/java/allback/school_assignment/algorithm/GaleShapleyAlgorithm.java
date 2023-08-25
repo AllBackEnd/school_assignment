@@ -161,6 +161,21 @@ public class GaleShapleyAlgorithm {
         }
       }
     }
+
+    // 7. 임의 배정
+    log.info("----- remain -----");
+    for (int remainIdx = 0; remainIdx < student_ids.size(); remainIdx++) {
+      // 8. 이미 배정 되었으면 패스
+      if (isEntered(remainIdx)) {
+        continue;
+      }
+      
+      String remainSchool = schoolCurCntMap.getRemainSchool();
+      enterSchool(remainSchool, remainIdx, student_ids);
+      log.info("prefer : {}, stdIdx : {} remain - \n", remainSchool, remainIdx);
+    }
+
+    checkNoRemainStudent();
   }
 
   // 지원 완료 여부 판단
@@ -181,6 +196,14 @@ public class GaleShapleyAlgorithm {
     schoolCurCntMap.increaseCurCnt(preferSchool);
     entered[stdIdx] = true;
     allocation.put(school_ids.get(stdIdx), preferSchool);
+  }
+
+  private void checkNoRemainStudent() {
+    for (int i = 0; i < entered.length; i++) {
+      if (!entered[i]) {
+        throw new RuntimeException("Remain student");
+      }
+    }
   }
 
   private String printResult() {
