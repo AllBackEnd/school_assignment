@@ -5,7 +5,7 @@ import java.util.List;
 import allback.school_assignment.student.domain.Student;
 
 public interface StudentService {
-    // public void makeData(int seed);
+    public Boolean hasYearData(String year);
     public List<Student> findAll();
     public void randomCreateStudent(String year);
 }

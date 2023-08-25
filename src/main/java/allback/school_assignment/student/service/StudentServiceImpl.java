@@ -23,6 +23,11 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findAll();
     }
 
+    @Override
+    public Boolean hasYearData(String year){
+        return !studentRepository.findByYear(year).isEmpty();
+    }
+
     @Transactional
     public void randomCreateStudent(String year) {
         Random random = new Random(Long.parseLong(year));

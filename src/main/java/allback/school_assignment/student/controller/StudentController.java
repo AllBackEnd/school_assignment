@@ -23,8 +23,11 @@ public class StudentController {
 
     @PostMapping("/student")
     public @ResponseBody String showStudents(@RequestParam("year") int year) {
-        studentService.randomCreateStudent(String.valueOf(year));
-        String studentInfoHtml = "남자는 2420명, 여자는 2445명 생성 되었습니다.";
+        String studentInfoHtml = "해당 연도의 데이터가 이미 등록되어 있습니다.";
+        if(!studentService.hasYearData(String.valueOf(year))) {
+            studentService.randomCreateStudent(String.valueOf(year));
+            studentInfoHtml = "남자는 2420명, 여자는 2445명 생성 되었습니다.";
+        }
         return studentInfoHtml;
     }
 }
