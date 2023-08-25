@@ -9,54 +9,35 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AllocationValidator {
 
-  public void validate(Map<Integer, PreferEnum> transRes, Map<Integer, List<String>> engageList) {
-    // 1. 바깥쪽 반복문
-    Iterator outIter = transRes.entrySet().iterator();
-    while (outIter.hasNext()) {
-      Entry<Integer, PreferEnum> outEle = (Entry<Integer, PreferEnum>) outIter.next();
-      Integer outId = outEle.getKey();
-      PreferEnum outPrefer = outEle.getValue();
+  public void validate(Map<String, Integer> lastPrefer, Map<Integer, PreferEnum> transRes, Map<Integer, List<String>> engageList) {
+    // 1. 각 학생에 대해 순회
+    Iterator transIter = transRes.entrySet().iterator();
+    while (transIter.hasNext()) {
+      Entry<Integer, PreferEnum> entry = (Entry<Integer, PreferEnum>) transIter.next();
 
-      // 2. 안쪽 반복문
-      Iterator inIter = transRes.entrySet().iterator();
-      while (inIter.hasNext()) {
-        Entry<Integer, PreferEnum> inEle = (Entry<Integer, PreferEnum>) inIter.next();
-        Integer inId = inEle.getKey();
-        PreferEnum inPrefer = inEle.getValue();
+      // 2. 현재 몇 지망인지 변수에 저장
+      int curPrefer = entry.getValue().getCode();
 
-        // 3. 자기 자신이면 skip
-        if (outId == inId) {
-          continue;
-        }
+      // 3. 현재 지망보다 높은 학교에 대해서 순회
+      for (int preferIdx = 0; preferIdx < curPrefer; preferIdx++) {
+        
+        // 4. 현재 지망보다 높은 학교 이름 획득
+        String targetSchool = getPreferSchool(entry.getKey(), preferIdx, engageList);
 
-        // 4. stable한지 검사
-        String outSchool = getPreferSchool(outId, outPrefer.getCode(), engageList);
-        if (isStable(outSchool, inId, inPrefer.getCode(), engageList)) {
-          //log.info("outId : {}, outPrefer : {}, inId : {}, inPrefer : {}, stable\n", outId,
-          //    outPrefer.getName(), inId, inPrefer.getName());
+        // 5. 현재 지망보다 높은 학교의 마지막 배정 순위 획득
+        int last = lastPrefer.get(targetSchool);
+
+        // 7. stable 판단
+        if (last > curPrefer) {
+          log.info("unstable -----");
         } else {
-          log.info("outId : {}, outPrefer : {}, inId : {}, inPrefer : {}, unstable ----- \n", outId,
-              outPrefer.getName(), inId, inPrefer.getName());
+          log.info("stable");
         }
       }
     }
   }
 
-  private boolean isStable(String outSchool, int inId, int inPrefer,
-      Map<Integer, List<String>> engageList) {
-
-    for (int inIndex = 1; inIndex < inPrefer; inIndex++) {
-      String inSchool = getPreferSchool(inId, inIndex, engageList);
-      if (outSchool.equals(inSchool)) {
-        log.info("outSchool : {}, pre prefer : {}, new prefer : {}", outSchool, inPrefer, inIndex);
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  private String getPreferSchool(int stdId, int preIdx, Map<Integer, List<String>> engageList) {
-    return engageList.get(stdId).get(preIdx);
+  private String getPreferSchool(int stdId, int prefer, Map<Integer, List<String>> engageList) {
+    return engageList.get(stdId).get(prefer);
   }
 }

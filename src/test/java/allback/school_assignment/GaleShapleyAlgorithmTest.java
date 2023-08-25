@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.java.Log;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -115,9 +116,10 @@ public class GaleShapleyAlgorithmTest {
     algorithm.printResult();
 
     SchoolMapper schoolMapper = new SchoolMapper();
-    Map<Integer, PreferEnum> transRes = schoolMapper.map((Map<Integer, String>) result.get(0), STUDENT_DATA);
+    schoolMapper.map((Map<Integer, String>) result.get(0), STUDENT_DATA);
+    schoolMapper.printLastPrefer();
 
     AllocationValidator allocationValidator = new AllocationValidator();
-    allocationValidator.validate(transRes, STUDENT_DATA);
+    allocationValidator.validate(schoolMapper.getLastPrefer(), schoolMapper.getTransResult(), STUDENT_DATA);
   }
 }
