@@ -12,6 +12,7 @@ public enum PreferEnum {
   P7(6, "7지망"),
   RANDOM(7, "임의배정");
 
+  @Getter
   private final int code;
   @Getter
   private final String name;

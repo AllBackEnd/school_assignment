@@ -111,7 +111,7 @@ public class GaleShapleyAlgorithm {
         ", seed: 0 " +
         ", allocation: " + allocation +
         ", remain_schools: " + remain_schools +
-        ", remain_students: " + remain_students);
+        ", remain_students: " + remain_students + "\n\n\n");
 
     return String.format("Policy GaleShapleyAlgorithm!");
   }

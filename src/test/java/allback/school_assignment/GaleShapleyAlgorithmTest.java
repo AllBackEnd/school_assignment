@@ -1,21 +1,24 @@
 package allback.school_assignment;
 
+import allback.school_assignment.algorithm.AllocationValidator;
 import allback.school_assignment.algorithm.GaleShapleyAlgorithm;
+import allback.school_assignment.algorithm.PreferEnum;
 import allback.school_assignment.algorithm.SchoolMapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.java.Log;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class GaleShapleyAlgorithmTest {
 
-  private static String S_ONE = "a에이고";
-  private static String S_TWO = "b비이고";
-  private static String S_THR = "c씨이고";
-  private static String S_FOU = "d디이고";
+  private static String S_ONE = "a";
+  private static String S_TWO = "b";
+  private static String S_THR = "c";
+  private static String S_FOU = "d";
 
   public static Map<String, Integer> SCHOOL_DATA = new HashMap<String, Integer>() {{
     put(S_ONE, 2);
@@ -114,5 +117,9 @@ public class GaleShapleyAlgorithmTest {
 
     SchoolMapper schoolMapper = new SchoolMapper();
     schoolMapper.map((Map<Integer, String>) result.get(0), STUDENT_DATA);
+    schoolMapper.printLastPrefer();
+
+    AllocationValidator allocationValidator = new AllocationValidator();
+    allocationValidator.validate(schoolMapper.getLastPrefer(), schoolMapper.getTransResult(), STUDENT_DATA);
   }
 }

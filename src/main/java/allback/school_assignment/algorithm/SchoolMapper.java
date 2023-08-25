@@ -5,14 +5,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SchoolMapper {
 
+  @Getter
+  private Map<Integer, PreferEnum> transResult;
+  @Getter
+  private Map<String, Integer> lastPrefer;
+
   // 배정 학교 이름을 지망 순위로 변환
   public Map<Integer, PreferEnum> map(Map<Integer, String> allocation, Map<Integer, List<String>> engageList) {
-    Map<Integer, PreferEnum> result = new HashMap<>();
+    transResult = new HashMap<>();
+    lastPrefer = new HashMap<>();
 
     Iterator iterator = allocation.entrySet().iterator();
     while (iterator.hasNext()) {
@@ -21,11 +28,12 @@ public class SchoolMapper {
       String allocSchool = allocElement.getValue();
 
       PreferEnum prefer = findPrefer(allocSchool, engageList.get(stdId));
-      result.put(stdId, prefer);
-      log.info("std id : {}, prefer : {}", stdId, prefer.getName());
+      transResult.put(stdId, prefer);
+      updateIfBigger(allocSchool, prefer.getCode());
+      log.info("std id : {}, prefer : {}, school name : {}", stdId, prefer.getName(), allocSchool);
     }
 
-    return result;
+    return transResult;
   }
 
   // 지망 순위 계산
@@ -37,5 +45,32 @@ public class SchoolMapper {
     }
 
     return PreferEnum.RANDOM;
+  }
+
+  public void updateIfBigger(String key, Integer prefer) {
+    // 비어있는 상태였다면 put하고 끝
+    if (!lastPrefer.containsKey(key)) {
+      lastPrefer.put(key, prefer);
+      return;
+    }
+
+    // 작다면 update
+    if (lastPrefer.get(key) < prefer) {
+      lastPrefer.replace(key, prefer);
+    }
+  }
+
+  public Integer getLastPreferForSchool(String key) {
+    return lastPrefer.get(key);
+  }
+
+  public void printLastPrefer() {
+    log.info("-----\n\n");
+    Iterator iter = lastPrefer.entrySet().iterator();
+    while (iter.hasNext()) {
+      Entry<String, Integer> element = (Entry<String, Integer>) iter.next();
+      log.info("key : {}, last prefer : {}", element.getKey(), element.getValue());
+    }
+    log.info("-----\n\n");
   }
 }
