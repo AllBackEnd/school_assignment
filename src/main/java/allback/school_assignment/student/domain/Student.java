@@ -4,9 +4,14 @@ import allback.school_assignment.valuetype.Gender;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -18,9 +23,11 @@ public class Student {
 
     @Id
     @Field("STD_ID")
+    @Setter
     private Long id;
 
     @Field("GND")
+    @Setter
     private Gender gender;
 
     @Field("SCR")
@@ -50,36 +57,31 @@ public class Student {
     @Field("YEAR_INFO")
     private String year;
 
-
-    private Student(Long id, String year) {
-        final Gender randomGender = Gender.values()[new Random().nextInt(Gender.values().length)];
-        this.id = id;
-        this.gender = randomGender;
-        this.score = createRandomScore();
-        final List<String> randomPreferSchool = createRandomPreferSchool(randomGender);
-        this.firstPreferSchool = randomPreferSchool.get(0);
-        this.secondPreferSchool = randomPreferSchool.get(1);
-        this.thirdPreferSchool = randomPreferSchool.get(2);
-        this.fourthPreferSchool = randomPreferSchool.get(3);
-        this.fifthPreferSchool = randomPreferSchool.get(4);
-        this.sixthPreferSchool = randomPreferSchool.get(5);
-        this.seventhPreferSchool = randomPreferSchool.get(6);
-        this.year = year;
+    private Student(Long id, Gender gender, String year, Random random) {
+            this.id = Integer.valueOf(year)*10000 + id;
+            this.gender = gender;
+            this.score = createRandomScore(random);
+            final List<String> randomPreferSchool = createRandomPreferSchool(id, gender, random);
+            this.firstPreferSchool = randomPreferSchool.get(0);
+            this.secondPreferSchool = randomPreferSchool.get(1);
+            this.thirdPreferSchool = randomPreferSchool.get(2);
+            this.fourthPreferSchool = randomPreferSchool.get(3);
+            this.fifthPreferSchool = randomPreferSchool.get(4);
+            this.sixthPreferSchool = randomPreferSchool.get(5);
+            this.seventhPreferSchool = randomPreferSchool.get(6);
+            this.year = year;
+    }
+    public static Student createRandomStudent(Long id, Gender gender, String year, Random random) {
+            return new Student(id, gender, year, random);
     }
 
-    public static Student createRandomStudent(Long id, String year) {
-
-        return new Student(id, year);
-    }
-
-    private Long createRandomScore() {
-        Random random = new Random();
+    private Long createRandomScore(Random random) {
         long min = 0;
-        long max = 100;
+        long max = 100000000;
         return random.nextLong(max - min +1) + min;
     }
 
-    private List<String> createRandomPreferSchool(Gender gender) {
+    private List<String> createRandomPreferSchool(Long id, Gender gender, Random random) {
 
         List<String> canSchoolList = new ArrayList<>();
 
@@ -107,9 +109,7 @@ public class Student {
                     , "산남고"
                     , "청주중앙여고"));
         }
-
-        Collections.shuffle(canSchoolList);
+        Collections.shuffle(canSchoolList, random);
         return canSchoolList;
     }
-
 }
