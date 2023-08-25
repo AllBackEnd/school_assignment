@@ -76,7 +76,6 @@ public class Student {
     }
 
     private Long createRandomScore(Random random) {
-        //Random random = new Random(id);
         long min = 0;
         long max = 100000000;
         return random.nextLong(max - min +1) + min;
