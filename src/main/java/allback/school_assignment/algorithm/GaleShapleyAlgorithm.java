@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 public class GaleShapleyAlgorithm {
 
@@ -147,7 +145,7 @@ public class GaleShapleyAlgorithm {
         }
 
         // 5. 특정 학생이 현재 우선 순위에서 원하는 학교 획득
-        String preferSchool = getPreferSchool(prefer, stdIdx, studentsEngageList);
+        String preferSchool = getPreferSchool(prefer, stdIdx, student_ids, studentsEngageList);
         
         // 6. 해당 학교에 지원
         if (schoolCurCntMap.isRemain(preferSchool)) {
@@ -163,8 +161,10 @@ public class GaleShapleyAlgorithm {
   }
 
   // 현재 우선 순위에서 선호 학교명 획득
-  private String getPreferSchool(int prefer, int stdIdx, Map<Integer, List<String>> studentsEngageList) {
-    return studentsEngageList.get(stdIdx).get(prefer);
+  private String getPreferSchool(int prefer, int stdIdx, List<Integer>student_ids, Map<Integer, List<String>> studentsEngageList) {
+    Integer id = student_ids.get(stdIdx);
+
+    return studentsEngageList.get(id).get(prefer);
   }
 
   // 학교에 지원 (지원 가능한 상태에서만 호출됨)

@@ -1,9 +1,10 @@
 package allback.school_assignment;
 
 import allback.school_assignment.algorithm.GaleShapleyAlgorithm;
-import java.util.ArrayList;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class GaleShapleyAlgorithmTest {
 
   @Test

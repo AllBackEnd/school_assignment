@@ -11,7 +11,7 @@ public class SchoolCurCntMap {
 
   private Map<String, List<Integer>> map = new HashMap<>();
   private static Integer CUR_IDX = 0;
-  private static Integer MAX_IDX = 0;
+  private static Integer MAX_IDX = 1;
 
   public SchoolCurCntMap(Map<String, Integer> schools) {
     Iterator iterator = schools.entrySet().iterator();
