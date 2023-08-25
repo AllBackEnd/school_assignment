@@ -18,7 +18,7 @@ public class StudentController {
     @GetMapping("/student")
     public String getData() {
         // studentService.findAll();
-        return "/Test";
+        return "Test";
     }
 
     @PostMapping("/student")
