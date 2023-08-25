@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SchoolMapper {
 
   // 배정 학교 이름을 지망 순위로 변환
@@ -18,7 +20,9 @@ public class SchoolMapper {
       Integer stdId = allocElement.getKey();
       String allocSchool = allocElement.getValue();
 
-      result.put(stdId, findPrefer(allocSchool, engageList.get(stdId)));
+      PreferEnum prefer = findPrefer(allocSchool, engageList.get(stdId));
+      result.put(stdId, prefer);
+      log.info("std id : {}, prefer : {}", stdId, prefer.getName());
     }
 
     return result;
