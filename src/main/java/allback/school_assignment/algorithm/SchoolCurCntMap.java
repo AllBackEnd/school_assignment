@@ -30,7 +30,7 @@ public class SchoolCurCntMap {
   }
 
   public void increaseCurCnt(String key) {
-    map.get(key).set(CUR_IDX, getCurCnt(key) + MAX_IDX);
+    map.get(key).set(CUR_IDX, getCurCnt(key) + 1);
   }
 
   public boolean isRemain(String key) {
