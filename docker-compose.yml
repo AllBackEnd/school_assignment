@@ -107,7 +107,7 @@ services:
       - ./build/libs:/volume
     environment:
       - LD_LIBRARY_PATH=/jlib
-    command: java -jar /volume/school_assignment-0.0.1-SNAPSHOT.jar
+    command: java -jar /volume/school_assignment-0.0.1-SNAPSHOT.jar --spring.data.mongodb.uri="mongodb://mongo:27017/school_assignment?retryWrites=false&directConnection=true"
     depends_on:
       - mongo
       - mongo1
