@@ -1,7 +1,6 @@
 package allback.school_assignment.school.domain.domain;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import allback.school_assignment.valuetype.Gender;
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Document(collection = "SCHOOL")
 public class School {
 
     @Id
