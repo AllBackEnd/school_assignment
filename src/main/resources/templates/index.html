@@ -119,7 +119,7 @@ input[type="text"] {
     <main>
         <div class="content">
             <h2>학생 데이터 생성</h2>
-            <form action="/student" method="post" onsubmit="onSubmitForm()">
+            <form action="/student" method="post">
                 <h3>연도를 입력해주세요</h3>
                 <label class="radio-inline">
                     <input type="radio" name="year" value="2021" required> 2021
@@ -148,21 +148,15 @@ input[type="text"] {
                 <button class="seed">7</button>
                 <button class="seed">8</button>
                 <button class="seed">9</button><br>
-            <form id="seedForm" action="" method="post" onsubmit="onSubmitForm()">
+            <form id="seedForm" action="/Assignment" method="post">
                 <h2>선택된 번호: <span class="selected"></span></h2><br>
                 <input type="hidden" name="seed" id="selectedSeedInput">
-                <button type="submit">배정</button>
+                <button id="seedSubmit" type="submit" onclick="updateFooter('배정이 시작되었습니다.')">배정</button>
             </form>
         </div>
     </main>
     <footer>
         <div id="footer">
-            <!-- <h3>학생 데이터를 생성하고 있습니다.</h3>
-            <h3>학생 데이터가 생성되었습니다.</h3>
-            <h3>배정이 시작되었습니다.</h3>
-            <h3>순차배정 방법에 의한 배정이 완료되었습니다.</h3>
-            <h3>통합배정 방법에 의한 배정이 완료되었습니다.</h3>
-            <h3>배정이 완료되었습니다.</h3> -->
         </div>
     </footer>
     <script>
@@ -238,7 +232,28 @@ input[type="text"] {
                     }
                 });
             });
-        });      
+        });    
+        
+        $(document).ready(function() {
+            $('#seedSubmit').click(function(event) {
+                event.preventDefault();
+                let seed = selectedDisplay.textContent;
+                selectedInput.value = seed;
+                console.log = seed;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Assignment',
+                    data: {'seed': seed},
+                    success: function(response) {
+                        $('#footer').html('<h3>' + response + '</h3>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });   
     </script>
 </body>
 </html>
