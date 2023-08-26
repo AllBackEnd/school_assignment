@@ -105,6 +105,7 @@ services:
     volumes:
       - ./libs:/jlib
       - ./build/libs:/volume
+      - ./school.csv:/school.csv
     environment:
       - LD_LIBRARY_PATH=/jlib
     command: java -jar /volume/school_assignment-0.0.1-SNAPSHOT.jar --spring.data.mongodb.uri="mongodb://mongo:27017/school_assignment?retryWrites=false&directConnection=true"
