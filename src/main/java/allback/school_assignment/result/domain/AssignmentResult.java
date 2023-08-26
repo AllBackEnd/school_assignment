@@ -17,18 +17,39 @@ public class AssignmentResult {
     @Field("ASGN_ID")
     private Long id;
 
+    @Field("SCH_NAME")
+    private String schName;
+
     @Field("ASGN_RSN")
     private String assignedReason;
 
     @Field("GND")
     private Gender gender;
 
-    @Field("GRAD")
+    @Field("GRADE")
     private Grade grade;
+
+    @Field("ALG")
+    private String algorithm;
 
     @Field("RND_NUM")
     private Integer randomNumber;
 
     @Field("YEAR_INFO")
     private String year;
+
+    public AssignmentResult(Long id, String schName, String assignedReason, Gender gender, Grade grade, String algorithm, Integer randomNumber, String year) {
+        this.id = id;
+        this.schName = schName;
+        this.assignedReason = assignedReason;
+        this.gender = gender;
+        this.grade = grade;
+        this.algorithm = algorithm;
+        this.randomNumber = randomNumber;
+        this.year = year;
+    }
+
+    public static AssignmentResult createAssignmentResult(Long id, String schName, String assignedReason, Gender gender, Grade grade, String algorithm, Integer randomNumber, String year) {
+        return new AssignmentResult(id, schName, assignedReason, gender, grade, algorithm, randomNumber, year);
+    }
 }
