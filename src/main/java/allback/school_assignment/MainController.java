@@ -48,18 +48,19 @@ public class MainController {
     }
 
 
-    @GetMapping("/test")
+    @PostMapping("/Assignment")
     @ResponseBody
-    public String test() {
+    public String assign(@RequestParam("year") int year,
+                         @RequestParam("seed") int seed) {
 
-        final List<School> schoolList = schoolRepository.findAll();
+        final List<School> schoolList = schoolRepository.findByYear(String.valueOf(year));
 
-        final List<Student> studentList = studentService.findAll();
+        final List<Student> studentList = studentService.findByYear(String.valueOf(year));
 
         final GaleShapleyAlgorithm galeShapleyAlgorithm = new GaleShapleyAlgorithm();
 
         // 교육감 선택 시드
-        final Random seedRandom = new Random(10);
+        final Random seedRandom = new Random(seed);
 
         List<Gender> genders = new ArrayList<>(Arrays.asList(Gender.남, Gender.여));
 
@@ -124,11 +125,14 @@ public class MainController {
                             student.getSeventhPreferSchool())));
                 }
 
-
                 galeShapleyAlgorithm.allocate(schools, students, n_wish, forbidden, school_ids, student_ids);
                 galeShapleyAlgorithm.printResult();
             }
         }
-        return "isok?";
+        String message = "배정이 완료되었습니다.";
+        if (studentService.findByYear(String.valueOf(year)).isEmpty()){
+            message = "해당 연도의 학생이 없습니다.";
+        } 
+        return message;
     }
 }

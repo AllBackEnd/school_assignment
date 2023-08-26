@@ -24,7 +24,7 @@ public class AssignmentController {
 
     private final AssignmentService assignmentService;
 
-    @PostMapping("/Assignment")
+    @PostMapping("/naver")
     public @ResponseBody String saveAsnm(@RequestParam("seed") int seed) {
         Iterator iterator = alloc("Hybrid", seed).entrySet().iterator();
         while (iterator.hasNext()) {

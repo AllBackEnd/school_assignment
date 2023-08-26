@@ -38,4 +38,8 @@ public class StudentServiceImpl implements StudentService {
             studentRepository.save((Student.createRandomStudent(i, Gender.여, year, random)));
         }
     }
+    @Override
+    public List<Student> findByYear(String year) {
+        return studentRepository.findByYear(year);
+    };
 }

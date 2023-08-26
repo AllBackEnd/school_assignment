@@ -151,6 +151,15 @@ input[type="text"] {
             <form id="seedForm" action="/Assignment" method="post">
                 <h2>선택된 번호: <span class="selected"></span></h2><br>
                 <input type="hidden" name="seed" id="selectedSeedInput">
+                <label class="radio-inline">
+                    <input type="radio" name="year" value="2021" required> 2021
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="year" value="2022" required> 2022
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="year" value="2023" required> 2023
+                </label>
                 <button id="seedSubmit" type="submit" onclick="updateFooter('배정이 시작되었습니다.')">배정</button>
             </form>
         </div>
@@ -237,6 +246,14 @@ input[type="text"] {
         $(document).ready(function() {
             $('#seedSubmit').click(function(event) {
                 event.preventDefault();
+                let radios = document.getElementsByName('year');
+                let checkedYear;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        checkedYear = radio.value;
+                        break;
+                    }
+                }
                 let seed = selectedDisplay.textContent;
                 selectedInput.value = seed;
                 console.log = seed;
@@ -244,7 +261,7 @@ input[type="text"] {
                 $.ajax({
                     type: 'POST',
                     url: '/Assignment',
-                    data: {'seed': seed},
+                    data: {'seed': seed, 'year':checkedYear},
                     success: function(response) {
                         $('#footer').html('<h3>' + response + '</h3>');
                     },

@@ -8,4 +8,5 @@ public interface StudentService {
     public Boolean hasYearData(String year);
     public List<Student> findAll();
     public void randomCreateStudent(String year);
+    List<Student> findByYear(String year);
 }
