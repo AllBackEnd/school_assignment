@@ -92,7 +92,7 @@ public class Student {
                 canSchoolList.add("흥덕고");
                 canSchoolList.add("봉명고");
                 canSchoolList.add("충대사대부고");
-                canSchoolList.add("대성고");
+                canSchoolList.add("청주대성고");
                 canSchoolList.add("주성고");
                 canSchoolList.add("금천고");
 
@@ -104,7 +104,6 @@ public class Student {
                     , "운호고"
                     , "세광고"
                     , "청주신흥고"
-                    , "청주대성고"
                     ));
         } else if (gender == Gender.여) {
             canSchoolList.addAll(Arrays.asList(
